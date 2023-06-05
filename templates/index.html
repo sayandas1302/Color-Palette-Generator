@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Color Palette Generator</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/palette.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body background="{{ url_for('static', filename='images/bgImg.png') }}">
+    <div class="header">
+        <h1>Color Palette Generator</h1>
+    </div>
+    <div class="main-content">
+        <h3 class="titles">
+            Upload Images Here
+        </h3>
+        <form action="/" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="uploader">
+                <input type="file" name="input_img" id="fileInput">
+                <label for="fileInput" style="background-image: url('{{ uploadImage_url }}')"></label>
+                <p>Upload your image <span>(.jpg or .png only)</span> here, size must be less than <span>20 MB</span></p>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+
+        <h3 class="titles">
+            Results
+        </h3>
+        <div class="results">
+            {% if input_url is none %}
+                No input yet!
+            {% else %}
+                <h4>Image inserted</h4>
+                {% if img_height > img_width %}
+                    <img class="input-img" src="{{ input_url }}" alt="inserted image" width="300">
+                {% else %}
+                    <img class="input-img" src="{{ input_url }}" alt="inserted image" height="300">
+                {% endif %}
+                <h4>Palette</h4>
+                    <img class="output-img" src="{{ output_url }}" alt="palette">
+                    <ul class="hex_vals">
+                        {% for val in hex_values %}
+                        <li>{{ val }}</li>
+                        {% endfor %}
+                    </ul>
+            {% endif %}
+        </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
